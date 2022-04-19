@@ -1,30 +1,10 @@
+const { request } = require('express')
+const { response } = require('express')
 const express = require('express')
 const app = express()
 app.use(express.json())
 
-let notes =  [
-      {
-        "id":1,
-        "latitude": 40.416875,
-        "longitude": -3.703308,
-        "city": "Madrid",
-        "description": "Puerta del Sol"
-      },
-      {
-        "id":2,
-        "latitude": 40.417438,
-        "longitude": -3.693363,
-        "city": "Madrid",
-        "description": "Paseo del Prado"
-      },
-      {
-        "id":3,
-        "latitude": 40.407015,
-        "longitude": -3.691163,
-        "city": "Madrid",
-        "description": "Estación de Atocha"
-      }
-    ]
+let notes =  require('./notes')
 
 
 app.get('/', (request, response)=>{
@@ -55,6 +35,12 @@ app.post('/api/notes', (request, response)=>{
     const note = request.body
     notes = [...notes, note]
     response.json(note)
+})
+
+app.use((request, response)=>{
+    response.status(404).json({
+        error:'not found'
+    })
 })
 
 const PORT = 3001
