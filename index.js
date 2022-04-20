@@ -1,7 +1,10 @@
 const { request } = require('express')
 const { response } = require('express')
 const express = require('express')
+const cors = require('cors')
 const app = express()
+
+app.use(cors())
 app.use(express.json())
 
 let notes =  require('./notes')
@@ -39,8 +42,9 @@ app.post('/api/notes', (request, response)=>{
 
 app.use((request, response)=>{
     response.status(404).json({
-        error:'not found'
+        error:'No se encuentra el recurso solicitado'
     })
+    
 })
 
 const PORT = 3001
